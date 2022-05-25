@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "nimble",
+    "password": "admin123",
+    "database": "nimble",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "nimble",
+    "password": "admin123",
+    "database": "nimble",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "nimble",
+    "password": "admin123",
+    "database": "nimble",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
