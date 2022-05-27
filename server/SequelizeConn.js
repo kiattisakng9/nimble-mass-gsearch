@@ -15,10 +15,15 @@ const sequelizeInstance = new Sequelize(seqHost, seqDialect, seqDB, {
 });
 
 // Initialize Sequelize connection
-sequelizeInstance.authenticate().catch((err) => {
-  console.error("Unable to connect to the database:", err.message);
-  logMessage(err);
-});
+sequelizeInstance
+  .authenticate()
+  .then((res) => {
+    console.log("Database Connected!");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err.message);
+    logMessage(err);
+  });
 
 // Function to log error message
 const logMessage = (error) => {

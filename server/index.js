@@ -22,7 +22,14 @@ app.use("/bodies", bodiesRoute);
 app.use("/auth", authRoute);
 
 app.listen(port, async () => {
-  console.log(`Example app listening on port ${port}`);
-  await sequelize.authenticate();
-  console.log("Database Connected!");
+  console.log(`App listening on port ${port}`);
+  await sequelize
+    .authenticate()
+    .then(() => {
+      console.log("Database Connected!");
+    })
+    .catch((err) => {
+      console.error("Unable to connect to the database:", err.message);
+      logMessage(err);
+    });
 });

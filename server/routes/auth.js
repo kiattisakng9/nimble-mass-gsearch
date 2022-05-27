@@ -1,53 +1,77 @@
 const express = require("express");
 const router = express.Router();
-const { sequelize, Users } = require("./../models");
+const { Users } = require("./../models");
 const bcrypt = require("bcrypt");
+const { body, validationResult } = require("express-validator");
 
-router.post("/register", async (req, res) => {
-  console.log("user_attributes :", req);
-  const userBody = req.body ?? false;
-  console.log("userBody :", userBody);
+// Authenticate user
+router.post(
+  "/login",
+  body("email").isEmail().not().isEmpty().trim().escape(),
+  body("password").not().isEmpty().trim().escape(),
+  async (req, res) => {
+    const errors = validationResult(req);
 
-  if (userBody) {
-    try {
-      // Hash password
-      const passwordHash = await bcrypt
-        .hash("dummypassword", 10)
-        .then((hash) => {
-          return hash;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    // Request body validation errors
+    if (!errors.isEmpty())
+      return res.status(400).json({
+        authenticated: false,
+        message: "Incorrect login credentials",
+      });
 
-      // Insert user into database
-      res.json({ ...userBody, passwordHash });
-    } catch (error) {
-      console.log("error :", error);
-      return res.status(500).json({ error: "Something went wrong" });
-    }
+    const userBody = req.body ?? false;
+
+    if (userBody) {
+      const email = userBody?.email ?? "";
+      const password = userBody?.password ?? "";
+
+      try {
+        // Fetch user by email
+        const fetchedUser = await Users.scope("withPassword")
+          .findOne({ where: { email } })
+          .then((user) => {
+            if (user) return user;
+            else return false;
+          });
+
+        if (fetchedUser) {
+          const fetchPassword = fetchedUser.password;
+
+          // Compare password
+          const passwordIsCorrect = await bcrypt
+            .compare(password, fetchPassword)
+            .then((result) => {
+              return result;
+            });
+
+          // Return user info if user is authenticated
+          const loginResult = passwordIsCorrect
+            ? {
+                authenticated: true,
+                user: {
+                  id: fetchedUser.id,
+                  first_name: fetchedUser.first_name,
+                  last_name: fetchedUser.last_name,
+                  email: fetchedUser.email,
+                },
+                message: "Login Successful",
+              }
+            : { authenticated: false, message: "Incorrect login credentials" };
+
+          return res.json(loginResult);
+        }
+        // User not found
+        else
+          return res.json({
+            authenticated: false,
+            message: "Incorrect login credentials",
+          });
+      } catch (error) {
+        console.log("error :", error);
+        return res.status(500).json({ error: "Something went wrong" });
+      }
+    } else return res.status(500).json({ error: "Something went wrong" });
   }
-});
-
-router.post("/login", async (req, res) => {
-  console.log("user_attributes :", req);
-  const userBody = req.body ?? false;
-
-  if (userBody) {
-    const email = userBody?.email ?? "";
-    const password = userBody?.password ?? "";
-
-    try {
-      // Fetch user by email
-      // Compare password
-
-      // Return true if user is authenticated
-      res.json({ ...userBody, passwordHash });
-    } catch (error) {
-      console.log("error :", error);
-      return res.status(500).json({ error: "Something went wrong" });
-    }
-  }
-});
+);
 
 module.exports = router;
