@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-const { sequelize, Users, SearchResults, ResultBody } = require("./models");
+const { sequelize } = require("./models");
 const app = express();
 
 bodyParser = require("body-parser");

@@ -2,11 +2,11 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    // Bulk insert search results
     await queryInterface.bulkInsert(
       "search_results",
       [
         {
-          result_id: 1,
           keyword: "book",
           adwords_number: 5,
           links_number: 6,
@@ -16,7 +16,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          result_id: 2,
           keyword: "laptop",
           adwords_number: 5,
           links_number: 6,
