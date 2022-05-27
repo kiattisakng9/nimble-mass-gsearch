@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("result_body", {
-      body_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "search_results",
-          key: "result_id",
+          key: "id",
         },
       },
       body_html: {

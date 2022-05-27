@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Users, ResultBody }) {
       // define association here
-      this.belongsTo(Users, { foreignKey: "user_id" });
+      this.belongsTo(Users, { foreignKey: "id" });
       this.hasOne(ResultBody, { foreignKey: "result_id", as: "body" });
     }
 
@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
   // Initialize model
   SearchResults.init(
     {
-      result_id: { type: DataTypes.INTEGER, primaryKey: true },
       keyword: { type: DataTypes.STRING, notNull: true },
       adwords_number: { type: DataTypes.INTEGER, validate: { isInt: true } },
       links_number: { type: DataTypes.INTEGER, validate: { isInt: true } },

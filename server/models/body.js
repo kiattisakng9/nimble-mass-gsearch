@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
   // Initialize model
   ResultBody.init(
     {
-      body_id: { type: DataTypes.INTEGER, primaryKey: true },
       result_id: { type: DataTypes.INTEGER, notNull: true },
       body_html: { type: DataTypes.STRING, notNull: true },
       created_at: new Date(),

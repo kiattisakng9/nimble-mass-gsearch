@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
   // Initialize model
   Users.init(
     {
-      user_id: { type: DataTypes.INTEGER, primaryKey: true },
       first_name: {
         type: DataTypes.STRING,
         notNull: true,
