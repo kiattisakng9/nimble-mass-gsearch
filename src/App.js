@@ -1,24 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from "react";
+import "./App.scss";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import RegistrationPage from "./Pages/RegistrationPage";
+import LoginPage from "./Pages/LoginPage";
+import SearchPage from "./Pages/SearchPage";
+import KeywordsPage from "./Pages/KeywordsPage";
+import LayoutContainer from "./Pages/LayoutContainer";
+import Protected from "./Protected";
+import NotFoundPage from "./Pages/NotFoundPage";
+import AuthRestricted from "./AuthRestricted";
+import DefaultHome from "./DefaultHome";
 
 function App() {
+  const isAuthenticated = useRef(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BrowserRouter>
+      <Routes>
+        <Route
+          element={<LayoutContainer isLoggedIn={isAuthenticated.current} />}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path='/' element={<DefaultHome />} />
+          <Route
+            path='/register'
+            element={
+              <AuthRestricted isAuthenticated={isAuthenticated.current}>
+                <RegistrationPage />
+              </AuthRestricted>
+            }
+          />
+          <Route
+            path='/login'
+            element={
+              <AuthRestricted isAuthenticated={isAuthenticated.current}>
+                <LoginPage />
+              </AuthRestricted>
+            }
+          />
+          <Route
+            path='/search'
+            element={
+              <Protected isAuthenticated={isAuthenticated.current}>
+                <SearchPage />
+              </Protected>
+            }
+          />
+          <Route
+            path='/keywords'
+            element={
+              <Protected isAuthenticated={isAuthenticated.current}>
+                <KeywordsPage />
+              </Protected>
+            }
+          />
+          <Route path='*' element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
