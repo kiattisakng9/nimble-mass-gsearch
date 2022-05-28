@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
+import Axios from "axios";
 
 // Create a authentication context
 const authContext = createContext();
@@ -21,9 +22,23 @@ const useProvideAuth = () => {
 
   // Sign user in function
   const signin = async (credentials) => {
-    const stringifiedUser = JSON.stringify(credentials);
-    sessionStorage.setItem("user", stringifiedUser);
-    setUser(credentials);
+    const authResult = await Axios.post("/auth/login", credentials)
+      .then((res) => (!res.data?.error ? res.data : null))
+      .catch((err) => {
+        console.log("err :", err);
+        alert("something went wrong");
+      });
+
+    const resultIsValid = authResult != null;
+    const isAuthenticated = resultIsValid ? authResult.authenticated : false;
+
+    if (isAuthenticated) {
+      const returnedUser = authResult.user;
+
+      const stringifiedUser = JSON.stringify(returnedUser);
+      sessionStorage.setItem("user", stringifiedUser);
+      setUser(credentials);
+    } else alert("Incorect login credentials");
   };
 
   // Sign user out function
