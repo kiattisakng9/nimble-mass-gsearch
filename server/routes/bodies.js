@@ -13,7 +13,6 @@ const checkIfResultExists = (id) => {
 // Check if search result already have a result body in the database
 const checkIfResultHaveABody = (id) => {
   return ResultBody.findAll({ where: { result_id: id } }).then((result) => {
-    console.log("result :", result);
     if (result && result.length >= 1)
       return Promise.reject("Search result already have a body");
   });
@@ -64,8 +63,7 @@ router.post(
     const errors = validationResult(req);
 
     // Request body validation errors
-    if (!errors.isEmpty())
-      return res.status(400).json({ error: errors.array() });
+    if (!errors.isEmpty()) return res.json({ error: errors.array() });
 
     const inputBody = req.body ?? false;
 
@@ -77,7 +75,7 @@ router.post(
         id: newResultBody.id,
         message: "Result body created!",
       });
-    } else return res.status(500).json({ error: "Something went wrong" });
+    } else return res.json({ error: "Something went wrong" });
   }
 );
 module.exports = router;

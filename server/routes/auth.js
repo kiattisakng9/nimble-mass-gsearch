@@ -14,7 +14,7 @@ router.post(
 
     // Request body validation errors
     if (!errors.isEmpty())
-      return res.status(400).json({
+      return res.json({
         authenticated: false,
         message: "Incorrect login credentials",
       });
@@ -70,7 +70,7 @@ router.post(
         console.log("error :", error);
         return res.status(500).json({ error: "Something went wrong" });
       }
-    } else return res.status(500).json({ error: "Something went wrong" });
+    } else return res.json({ error: "Something went wrong" });
   }
 );
 

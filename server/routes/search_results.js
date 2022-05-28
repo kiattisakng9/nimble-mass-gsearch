@@ -76,8 +76,7 @@ router.post(
     const errors = validationResult(req);
 
     // Request body validation errors
-    if (!errors.isEmpty())
-      return res.status(400).json({ error: errors.array() });
+    if (!errors.isEmpty()) return res.json({ error: errors.array() });
 
     const searchResultBody = req.body ?? false;
 
@@ -89,7 +88,7 @@ router.post(
         id: newSearchResult.id,
         message: "Search Result created!",
       });
-    } else return res.status(500).json({ error: "Something went wrong" });
+    } else return res.json({ error: "Something went wrong" });
   }
 );
 
