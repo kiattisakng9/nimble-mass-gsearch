@@ -51,7 +51,9 @@ const KeywordsPage = () => {
   const handleOnKeywordIDChange = (id, keywords) => {
     const keywordResult = keywords.filter((res) => res.id === id);
 
-    setSelectedKeyword(keywordResult);
+    // Set as selected if keyword result matches its ID
+    if (keywordResult.length > 0) setSelectedKeyword(keywordResult[0]);
+    else setSelectedKeyword(null);
   };
 
   return (
