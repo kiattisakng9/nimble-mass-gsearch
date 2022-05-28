@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { SearchResults, Users } = require("./../models");
+const { Sequelize, SearchResults, Users } = require("./../models");
 const { body, validationResult } = require("express-validator");
 
 // Check if user ID exists in the database
@@ -50,6 +50,23 @@ router.get("/user/:id", async (req, res) => {
     // Fetch search result of user ID passed
     const fetchedResults = await SearchResults.findAll({
       where: { user_id: userID },
+      include: "body",
+      required: true,
+    });
+
+    return res.json(fetchedResults);
+  } else return res.status(500).json({ error: "Something went wrong" });
+});
+
+// Get search results by search term
+router.get("/user/:id/search", async (req, res) => {
+  const userID = req.params?.id;
+  const searchTerm = req.query?.keyword;
+
+  if (searchTerm && userID) {
+    // Fetch search result of user ID passed
+    const fetchedResults = await SearchResults.findAll({
+      where: { user_id: userID, keyword: { [Sequelize.Op.iLike]: searchTerm } },
       include: "body",
       required: true,
     });
