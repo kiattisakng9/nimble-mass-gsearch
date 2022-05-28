@@ -1,18 +1,14 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import AuthRestricted from "./AuthRestricted";
+import { useAuth } from "./Contexts/AuthContext";
 import LoginPage from "./Pages/LoginPage";
 import SearchPage from "./Pages/SearchPage";
 import Protected from "./Protected";
 
-const DefaultHome = (props) => {
-  const isAuthenticated = useRef(props.isAuthenticated);
+const DefaultHome = () => {
+  const auth = useAuth();
 
-  useEffect(() => {
-    if (isAuthenticated.current != props.isAuthenticated) {
-      isAuthenticated.current =
-        isAuthenticated.current != props.isAuthenticated;
-    }
-  }, [props.isAuthenticated]);
+  const isAuthenticated = auth?.user != null;
 
   /**
    * Set default landing page

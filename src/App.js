@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import "./App.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -11,53 +10,52 @@ import Protected from "./Protected";
 import NotFoundPage from "./Pages/NotFoundPage";
 import AuthRestricted from "./AuthRestricted";
 import DefaultHome from "./DefaultHome";
+import { ProvideAuth } from "./Contexts/AuthContext";
 
 function App() {
-  const isAuthenticated = useRef(false);
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          element={<LayoutContainer isLoggedIn={isAuthenticated.current} />}
-        >
-          <Route path='/' element={<DefaultHome />} />
-          <Route
-            path='/register'
-            element={
-              <AuthRestricted isAuthenticated={isAuthenticated.current}>
-                <RegistrationPage />
-              </AuthRestricted>
-            }
-          />
-          <Route
-            path='/login'
-            element={
-              <AuthRestricted isAuthenticated={isAuthenticated.current}>
-                <LoginPage />
-              </AuthRestricted>
-            }
-          />
-          <Route
-            path='/search'
-            element={
-              <Protected isAuthenticated={isAuthenticated.current}>
-                <SearchPage />
-              </Protected>
-            }
-          />
-          <Route
-            path='/keywords'
-            element={
-              <Protected isAuthenticated={isAuthenticated.current}>
-                <KeywordsPage />
-              </Protected>
-            }
-          />
-          <Route path='*' element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ProvideAuth>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<LayoutContainer />}>
+            <Route path='/' element={<DefaultHome />} />
+            <Route
+              path='/register'
+              element={
+                <AuthRestricted>
+                  <RegistrationPage />
+                </AuthRestricted>
+              }
+            />
+            <Route
+              path='/login'
+              element={
+                <AuthRestricted>
+                  <LoginPage />
+                </AuthRestricted>
+              }
+            />
+            <Route
+              path='/search'
+              element={
+                <Protected>
+                  <SearchPage />
+                </Protected>
+              }
+            />
+            <Route
+              path='/keywords'
+              element={
+                <Protected>
+                  <KeywordsPage />
+                </Protected>
+              }
+            />
+            <Route path='*' element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ProvideAuth>
   );
 }
 

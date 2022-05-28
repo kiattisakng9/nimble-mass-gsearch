@@ -1,11 +1,17 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { useAuth } from "../Contexts/AuthContext";
 import NavigationBar from "../NavigationBar";
 
-const LayoutContainer = (props) => {
+// Application layout container
+const LayoutContainer = () => {
+  const auth = useAuth();
+
+  const isAuthenticated = auth?.user != null;
+
   return (
     <>
-      <NavigationBar isLoggedIn={props.isLoggedIn} />
+      <NavigationBar isLoggedIn={isAuthenticated} />
       <Outlet />
     </>
   );
