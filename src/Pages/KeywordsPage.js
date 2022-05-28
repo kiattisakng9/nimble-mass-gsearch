@@ -22,21 +22,6 @@ const KeywordsPage = () => {
   }, [user]);
 
   useEffect(() => {
-    // Fetch keywords of current user
-    const fetchKeywords = async (userID) => {
-      const keywords = await Axios.get(`/search_results/user/${userID}`)
-        .then((res) => (!res.data?.error ? res.data : []))
-        .catch((err) => {
-          console.log(err);
-          return [];
-        });
-
-      // Sort keyword results by ID
-      const sortedKeywords = keywords.sort((a, b) => a.id - b.id);
-
-      setKeywords(sortedKeywords);
-    };
-
     // Fetch keyword results of user
     const currentUserID = userID.current;
     fetchKeywords(currentUserID);
@@ -47,6 +32,17 @@ const KeywordsPage = () => {
     handleOnKeywordIDChange(selectedID, keywords);
   }, [selectedID]);
 
+  // Search for keywords result with term entered
+  useEffect(() => {
+    const currentUserID = userID.current;
+    fetchKeywordsWithTerm(currentUserID, searchTerm);
+  }, [searchTerm]);
+
+  // Reset selected keyword result to null
+  useEffect(() => {
+    resetSelectedKeyword();
+  }, [keywords]);
+
   // Function to handle when keyword is selected
   const handleOnKeywordIDChange = (id, keywords) => {
     const keywordResult = keywords.filter((res) => res.id === id);
@@ -54,6 +50,39 @@ const KeywordsPage = () => {
     // Set as selected if keyword result matches its ID
     if (keywordResult.length > 0) setSelectedKeyword(keywordResult[0]);
     else setSelectedKeyword(null);
+  };
+
+  // Fetch keywords of current user
+  const fetchKeywords = (userID) => {
+    const allKeywordsUTRI = `/search_results/user/${userID}`;
+    handleRequests(allKeywordsUTRI);
+  };
+
+  // Fetch keywords of current user based on search term
+  const fetchKeywordsWithTerm = (userID, searchTerm) => {
+    const searchTermURI = `/search_results/user/${userID}/search?keyword=%${searchTerm}%`;
+    handleRequests(searchTermURI);
+  };
+
+  // Handle API requests for keyword results fetching
+  const handleRequests = async (uri) => {
+    const keywords = await Axios.get(uri)
+      .then((res) => (!res.data?.error ? res.data : []))
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+
+    // Sort keyword results by ID
+    const sortedKeywords = keywords.sort((a, b) => a.id - b.id);
+
+    setKeywords(sortedKeywords);
+  };
+
+  // Remove selected keyword result
+  const resetSelectedKeyword = () => {
+    setSelectedKeyword(null);
+    setSelectedID(null);
   };
 
   return (
@@ -67,7 +96,7 @@ const KeywordsPage = () => {
         <Row id='main-keywords-panel'>
           <Col md={5}>
             <Row>
-              <SearchBar />
+              <SearchBar setSearchTerm={setSearchTerm} />
             </Row>
             <Row>
               <KeywordsList keywords={keywords} setSelectedID={setSelectedID} />
