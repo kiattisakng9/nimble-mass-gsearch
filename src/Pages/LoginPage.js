@@ -37,7 +37,7 @@ const LoginPage = () => {
   return (
     <div>
       <Row>
-        <Container className='App'>
+        <Container className='center-container'>
           <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='email'>
               <Form.Label>Email address</Form.Label>

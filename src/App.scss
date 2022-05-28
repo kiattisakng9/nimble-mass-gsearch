@@ -1,8 +1,7 @@
 $backgroundColour: #282c34;
-$fontColour: white;
+$screenHeight: 75vh;
 
-.App {
-  color: $fontColour;
+.center-container {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -28,4 +27,24 @@ $fontColour: white;
 
 .App-link {
   color: #61dafb;
+}
+.view-height {
+  height: $screenHeight;
+}
+.keywords-list-container {
+  height: $screenHeight;
+  overflow: scroll;
+}
+
+#body-preview {
+  width: 100%;
+  padding: 5px;
+  height: 62vh;
+  overflow: scroll;
+  border: 1px black solid;
+  border-radius: 4px;
+}
+
+#main-keywords-panel {
+  height: $screenHeight;
 }

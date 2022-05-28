@@ -42,7 +42,7 @@ const RegistrationPage = () => {
   return (
     <div>
       <Row>
-        <Container className='App'>
+        <Container className='center-container'>
           <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='firstName'>
               <Form.Label>First Name</Form.Label>
