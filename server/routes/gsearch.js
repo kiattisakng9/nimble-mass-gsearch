@@ -8,12 +8,16 @@ router.get("/:search", async (req, res) => {
 
   try {
     request(
-      `http://www.google.com/search?q=${searchTerm}`,
+      {
+        headers: { "Content-Type": "text/html; charset=UTF-8" },
+        uri: `https://google.com/search?q=${searchTerm}&hl=en`,
+        method: "GET",
+      },
       function (error, response, body) {
         if (error)
           return res.status(500).json({ error: "Something went wrong" });
 
-        res.send(body);
+        res.json({ keyword: searchTerm, body, response });
       }
     );
   } catch (error) {
