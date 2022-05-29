@@ -103,6 +103,7 @@ router.post(
 
       return res.json({
         id: newSearchResult.id,
+        keyword: searchResultBody.keyword,
         message: "Search Result created!",
       });
     } else return res.json({ error: "Something went wrong" });
