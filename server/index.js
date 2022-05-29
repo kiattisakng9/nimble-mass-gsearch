@@ -1,5 +1,6 @@
-const express = require("express");
 require("dotenv").config();
+const express = require("express");
+var cors = require("cors");
 const { sequelize } = require("./models");
 const app = express();
 
@@ -8,9 +9,11 @@ const usersRoute = require("./routes/users");
 const searchResultsRoute = require("./routes/search_results");
 const bodiesRoute = require("./routes/bodies");
 const authRoute = require("./routes/auth");
+const gSearchRoute = require("./routes/gsearch");
 
 const port = process.env.PORT;
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("All good!");
@@ -20,6 +23,7 @@ app.use("/users", usersRoute);
 app.use("/search_results", searchResultsRoute);
 app.use("/bodies", bodiesRoute);
 app.use("/auth", authRoute);
+app.use("/gsearch", gSearchRoute);
 
 app.listen(port, async () => {
   console.log(`App listening on port ${port}`);
