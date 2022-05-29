@@ -17,7 +17,7 @@ module.exports = {
         },
       },
       body_html: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       created_at: {

@@ -12,7 +12,8 @@ const authRoute = require("./routes/auth");
 const gSearchRoute = require("./routes/gsearch");
 
 const port = process.env.PORT;
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "2mb" }));
+app.use(bodyParser.urlencoded({ limit: "2mb", extended: true }));
 app.use(cors());
 
 app.get("/", (req, res) => {
