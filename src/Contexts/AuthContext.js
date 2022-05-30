@@ -10,7 +10,7 @@ const useProvideAuth = () => {
   const [user, setUser] = useState(null);
 
   // User stored in browser session storage
-  const sessionUser = sessionStorage?.getItem("user");
+  const sessionUser = localStorage?.getItem("user");
 
   useEffect(() => {
     if (sessionUser && user?.email === sessionUser?.email) {
@@ -63,7 +63,7 @@ const useProvideAuth = () => {
       const stringifiedUser = JSON.stringify(returnedUser);
 
       // Set user in context and browser session
-      sessionStorage.setItem("user", stringifiedUser);
+      localStorage.setItem("user", stringifiedUser);
       setUser(returnedUser);
     } else alert("Incorect login credentials");
   };
@@ -72,7 +72,7 @@ const useProvideAuth = () => {
   const signout = async () => {
     // Remove user from context and browser session
     setUser(null);
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
   };
 
   // Build error messages from error returned
