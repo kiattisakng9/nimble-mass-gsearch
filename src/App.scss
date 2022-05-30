@@ -28,9 +28,11 @@ $screenHeight: 75vh;
 .App-link {
   color: #61dafb;
 }
+
 .view-height {
   height: $screenHeight;
 }
+
 .keywords-list-container {
   height: 67vh;
   overflow: scroll;
@@ -88,4 +90,10 @@ $screenHeight: 75vh;
 
 .fetched-results-label {
   text-align: right;
+}
+
+.forms-container {
+  width: 40%;
+  border: rgb(148, 146, 146) solid 1px;
+  border-radius: 3%;
 }

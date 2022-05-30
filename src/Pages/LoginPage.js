@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button, Container, Form, Row } from "react-bootstrap";
+import { Button, Container, Form, Row, Col } from "react-bootstrap";
 
 import { useAuth } from "../Contexts/AuthContext";
 
@@ -36,35 +36,38 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Row>
-        <Container className='center-container'>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='email'>
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                required
-                type='email'
-                name='email'
-                placeholder='Enter email'
-                onChange={(evt) => handleOnChangeInputs(evt, inputEmail)}
-              />
-            </Form.Group>
-            <Form.Group className='mb-3' controlId='password'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                type='password'
-                name='password'
-                placeholder='Password'
-                onChange={(evt) => handleOnChangeInputs(evt, inputPassword)}
-              />
-            </Form.Group>
-            <Button variant='primary' type='submit'>
-              Submit
-            </Button>
-          </Form>
-        </Container>
-      </Row>
+      <Container className='mx-auto forms-container'>
+        <Row className='mb-5 mt-5'>
+          <Col md={12}>
+            <h3>Login</h3>
+          </Col>
+        </Row>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className='mb-4' controlId='email'>
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              required
+              type='email'
+              name='email'
+              placeholder='Enter email'
+              onChange={(evt) => handleOnChangeInputs(evt, inputEmail)}
+            />
+          </Form.Group>
+          <Form.Group className='mb-4' controlId='password'>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              required
+              type='password'
+              name='password'
+              placeholder='Password'
+              onChange={(evt) => handleOnChangeInputs(evt, inputPassword)}
+            />
+          </Form.Group>
+          <Button variant='primary' type='submit' className='mb-5'>
+            Submit
+          </Button>
+        </Form>
+      </Container>
     </div>
   );
 };

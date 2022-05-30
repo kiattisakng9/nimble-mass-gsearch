@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button, Container, Form, Row } from "react-bootstrap";
+import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import { useAuth } from "../Contexts/AuthContext";
 
 const RegistrationPage = () => {
@@ -41,8 +41,13 @@ const RegistrationPage = () => {
 
   return (
     <div>
-      <Row>
-        <Container className='center-container'>
+      <Container className='mx-auto forms-container'>
+        <Row className='mb-5 mt-5'>
+          <Col md={12}>
+            <h3>Registration Form</h3>
+          </Col>
+        </Row>
+        <Row>
           <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='firstName'>
               <Form.Label>First Name</Form.Label>
@@ -74,7 +79,7 @@ const RegistrationPage = () => {
                 onChange={(evt) => handleOnChangeInputs(evt, inputEmail)}
               />
             </Form.Group>
-            <Form.Group className='mb-3' controlId='password'>
+            <Form.Group className='mb-5' controlId='password'>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
@@ -85,12 +90,12 @@ const RegistrationPage = () => {
                 onChange={(evt) => handleOnChangeInputs(evt, inputPassword)}
               />
             </Form.Group>
-            <Button variant='primary' type='submit'>
+            <Button variant='primary' type='submit' className='mb-5'>
               Submit
             </Button>
           </Form>
-        </Container>
-      </Row>
+        </Row>
+      </Container>
     </div>
   );
 };

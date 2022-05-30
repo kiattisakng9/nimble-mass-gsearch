@@ -13,7 +13,7 @@ const KeywordsItem = (props) => {
   };
 
   return (
-    <ListGroup.Item action onClick={handleItemClick}>
+    <ListGroup.Item action key={ID} onClick={handleItemClick}>
       {title.current}
     </ListGroup.Item>
   );
