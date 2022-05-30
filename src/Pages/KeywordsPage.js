@@ -14,6 +14,7 @@ const KeywordsPage = () => {
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [selectedID, setSelectedID] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const numberOfKeywords = keywords.length;
 
   useEffect(() => {
     const newUserID = user.id;
@@ -100,6 +101,11 @@ const KeywordsPage = () => {
             </Row>
             <Row>
               <KeywordsList keywords={keywords} setSelectedID={setSelectedID} />
+            </Row>
+            <Row>
+              <p className='fetched-results-label'>
+                <b>{numberOfKeywords}</b> keywords fetched
+              </p>
             </Row>
           </Col>
           <Col md={7}>

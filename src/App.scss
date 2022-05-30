@@ -32,7 +32,7 @@ $screenHeight: 75vh;
   height: $screenHeight;
 }
 .keywords-list-container {
-  height: $screenHeight;
+  height: 67vh;
   overflow: scroll;
 }
 
@@ -84,4 +84,8 @@ $screenHeight: 75vh;
 .result-preview {
   margin-top: 5%;
   text-align: left;
+}
+
+.fetched-results-label {
+  text-align: right;
 }
