@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "migrate-db": "npx sequelize-cli db:migrate",
+    "undo-migrate-db": "npx sequelize-cli db:migrate:undo",
+    "seed-users": "npx sequelize-cli db:seed:all",
+    "undo-seed-users": "npx sequelize-cli db:seed:undo",
     "start": "nodemon index.js"
   },
   "dependencies": {
