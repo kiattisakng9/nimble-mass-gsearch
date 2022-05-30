@@ -1,22 +1,22 @@
 import Axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 import CSVReader from "react-csv-reader";
 import { encode } from "html-entities";
 import { useAuth } from "./../../Contexts/AuthContext";
 
-const CSVInput = () => {
+const CSVInput = (props) => {
   const auth = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Counters
-  const submittedCount = useRef(0);
-  const duplicatesCount = useRef(0);
-  const executedCount = useRef(0);
-  const [successCount, setSuccessCount] = useState(0);
-  const [failCount, setFailCount] = useState(0);
+  const setSubmittedCount = props.setSubmittedCount;
+  const setDuplicatesCount = props.setDuplicatesCount;
+  const setExecutedCount = props.setExecutedCount;
+  const setSuccessCount = props.setSuccessCount;
+  const setFailCount = props.setFailCount;
 
-  const [isComplete, setIsComplete] = useState(false);
+  const setIsExecuting = props.setIsExecuting;
+  const setIsComplete = props.setIsComplete;
 
   const papaparseOptions = {
     header: false,
@@ -29,6 +29,7 @@ const CSVInput = () => {
     // Reset error message and reset counts
     setErrorMessage("");
     resetCounts();
+    setIsExecuting(true);
     setIsComplete(false);
 
     // CSV file exceeds 1 MB in size
@@ -140,7 +141,7 @@ const CSVInput = () => {
 
         for (let j = 0; j < RBParams.length; j++) {
           const param = RBParams[j];
-          if (reqKeyword == param.keyword) {
+          if (reqKeyword === param.keyword) {
             mappedRBParams.push({ ...param, result_id: reqNewID });
             break;
           }
@@ -163,6 +164,7 @@ const CSVInput = () => {
         // Set response counts
         setResponseCounts(requestParams, RBSuccessRequests);
         setIsComplete(true);
+        setIsExecuting(false);
       });
     });
   };
@@ -211,6 +213,7 @@ const CSVInput = () => {
     return resultObj;
   };
 
+  // Extract number from "About n results" string
   const getResultNumber = (str) => {
     const resultStatsString = str;
     const splitString = resultStatsString.split(" ");
@@ -231,9 +234,9 @@ const CSVInput = () => {
     const uniqueSize = uniqueArr.length;
     const duplicatedSize = totalSize - uniqueSize;
 
-    submittedCount.current = totalSize;
-    executedCount.current = uniqueSize;
-    duplicatesCount.current = duplicatedSize;
+    setSubmittedCount(totalSize);
+    setExecutedCount(uniqueSize);
+    setDuplicatesCount(duplicatedSize);
   };
 
   // Set response counts
@@ -248,9 +251,9 @@ const CSVInput = () => {
 
   // Reset counts
   const resetCounts = () => {
-    submittedCount.current = 0;
-    duplicatesCount.current = 0;
-    executedCount.current = 0;
+    setSubmittedCount(0);
+    setExecutedCount(0);
+    setDuplicatesCount(0);
     setSuccessCount(0);
     setFailCount(0);
   };

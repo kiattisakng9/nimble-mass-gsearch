@@ -52,7 +52,6 @@ $screenHeight: 75vh;
 #search-bar-container {
   width: 100%;
   margin: 10px 0px;
-  
 }
 
 #search-bar {
@@ -60,15 +59,29 @@ $screenHeight: 75vh;
   padding-top: 2px;
 }
 
-.error-message{
-  color: red
+.error-message {
+  color: red;
 }
 
-.react-csv-input{
+.react-csv-input {
   width: 50%;
 }
 
-.csv-label{
-  display:block;
-  margin:5px
+.csv-label {
+  display: block;
+  margin: 10px;
+  font-size: 2em;
+}
+
+#preloader {
+  display: block;
+  position: fixed;
+  width: 20vw;
+  height: 28vh;
+  left: 40%;
+}
+
+.result-preview {
+  margin-top: 5%;
+  text-align: left;
 }
