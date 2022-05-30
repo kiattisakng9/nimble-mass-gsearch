@@ -3,10 +3,15 @@ import { Container, Nav, Navbar, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "./Contexts/AuthContext";
 
-const NavigationBar = (props) => {
+const NavigationBar = () => {
   const auth = useAuth();
 
   const isAuthenticated = auth?.user != null;
+
+  const loggedInUser = isAuthenticated ? auth.user : null;
+  const fullName = isAuthenticated
+    ? `${loggedInUser.first_name} ${loggedInUser.last_name}`
+    : "";
 
   /**
    * Show and hide navigation links based on authentication status of user
@@ -19,14 +24,14 @@ const NavigationBar = (props) => {
           <Navbar.Brand>Mass G-Search</Navbar.Brand>
           <Nav className='me-auto'>
             {isAuthenticated && (
-              <Nav.Link>
-                <Link to='/search'>Search</Link>
-              </Nav.Link>
+              <Link className='nav-link' to='/search'>
+                Search
+              </Link>
             )}
             {isAuthenticated && (
-              <Nav.Link>
-                <Link to='/keywords'>Keywords</Link>
-              </Nav.Link>
+              <Link className='nav-link' to='/keywords'>
+                Keywords
+              </Link>
             )}
             {isAuthenticated ? (
               <Nav.Link
@@ -38,16 +43,21 @@ const NavigationBar = (props) => {
                 Logout
               </Nav.Link>
             ) : (
-              <Nav.Link>
-                <Link to='/login'>Login</Link>
-              </Nav.Link>
+              <Link className='nav-link' to='/login'>
+                Login
+              </Link>
             )}
             {!isAuthenticated && (
-              <Nav.Link>
-                <Link to='/register'>Register</Link>
-              </Nav.Link>
+              <Link className='nav-link' to='/register'>
+                Register
+              </Link>
             )}
           </Nav>
+          {isAuthenticated && (
+            <Navbar.Text>
+              Signed in as: <b>{fullName}</b>
+            </Navbar.Text>
+          )}
         </Container>
       </Navbar>
     </Row>
