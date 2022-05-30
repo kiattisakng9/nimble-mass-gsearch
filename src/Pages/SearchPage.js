@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import CSVInput from "./SearchComponents/CSVInput";
-import Preloader from "./SearchComponents/Preloader";
+import Preloader from "./Preloader";
 import UploadResults from "./SearchComponents/UploadResults";
 
 const SearchPage = () => {

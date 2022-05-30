@@ -9,7 +9,7 @@ const UploadResults = (props) => {
   const fail = props.fail;
 
   return (
-    <div className='center-container result-preview'>
+    <div id='result-preview' className='center-container'>
       <h4>Upload Results</h4>
       <p>
         The uploaded file contains <b>{submitted}</b> keywords,{" "}

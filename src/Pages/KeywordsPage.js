@@ -5,6 +5,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import ResultsPreview from "./KeywordsComponents/ResultsPreview";
 import SearchBar from "./KeywordsComponents/SearchBar";
 import KeywordsList from "./KeywordsComponents/KeywordsList";
+import Preloader from "./Preloader";
 
 const KeywordsPage = () => {
   const auth = useAuth();
@@ -14,6 +15,7 @@ const KeywordsPage = () => {
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [selectedID, setSelectedID] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isFetching, setIsFetching] = useState(true);
   const numberOfKeywords = keywords.length;
 
   useEffect(() => {
@@ -55,12 +57,14 @@ const KeywordsPage = () => {
 
   // Fetch keywords of current user
   const fetchKeywords = (userID) => {
+    setIsFetching(true);
     const allKeywordsUTRI = `/search_results/user/${userID}`;
     handleRequests(allKeywordsUTRI);
   };
 
   // Fetch keywords of current user based on search term
   const fetchKeywordsWithTerm = (userID, searchTerm) => {
+    setIsFetching(true);
     const searchTermURI = `/search_results/user/${userID}/search?keyword=%${searchTerm}%`;
     handleRequests(searchTermURI);
   };
@@ -78,6 +82,7 @@ const KeywordsPage = () => {
     const sortedKeywords = keywords.sort((a, b) => a.id - b.id);
 
     setKeywords(sortedKeywords);
+    setIsFetching(false);
   };
 
   // Remove selected keyword result
@@ -103,11 +108,12 @@ const KeywordsPage = () => {
               <KeywordsList keywords={keywords} setSelectedID={setSelectedID} />
             </Row>
             <Row>
-              <p className='fetched-results-label'>
+              <p id='fetched-results-label'>
                 <b>{numberOfKeywords}</b> keywords fetched
               </p>
             </Row>
           </Col>
+          {isFetching && <Preloader />}
           <Col md={7}>
             <ResultsPreview selectedKeyword={selectedKeyword} />
           </Col>
