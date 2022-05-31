@@ -10,8 +10,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 **Note: If you do not wish to create the superuser / database, you may adjust the database connection information in: `/server/.env`
 
+
+## Getting started
+
+### Clone the repo to your machine and install NPM packages
 ### NPM packages
-  - Please run the following command to install for both front and backend of the application from the root directory of the app ("/") and ("/server) respectively:
+  - Please run the following command to install for both front and backend of the application from the root directory of the app ("/") and ("/server") respectively:
 
 #### `yarn install`
 
@@ -19,10 +23,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 #### `npm install`
 
-
-## Getting started
-
-### Run the migration scripts to create the required tables into the database
+### Run the migration scripts from `/server` to create the required tables into the database
 #### `yarn migrate-db`
 
 ### Insert users with the seeder command
