@@ -25,7 +25,10 @@ const CSVInput = (props) => {
   };
 
   // Handle contents of CSV file input
-  const handleCSVInput = (data, fileInfo, originalFile) => {
+  const handleCSVInput = async (data, fileInfo, originalFile) => {
+    // Display uploading message
+    alert("Uploading file...");
+
     // Reset error message and reset counts
     setErrorMessage("");
     resetCounts();
@@ -62,7 +65,9 @@ const CSVInput = (props) => {
     }
 
     // Trim keywords
-    const trimmedKeywords = keywords.map((keywords) => keywords.trim());
+    const trimmedKeywords = keywords.map((keywords) =>
+      keywords.toString().trim()
+    );
 
     // CSV file must be at least 1 to 100 keywords
     const numberOfKeywords = trimmedKeywords.length;

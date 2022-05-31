@@ -23,8 +23,8 @@ const LoginPage = () => {
     event.preventDefault();
 
     // Trim values
-    const trimmedEmail = inputEmail.current.trim();
-    const trimmedPassword = inputPassword.current.trim();
+    const trimmedEmail = inputEmail.current.toString().trim();
+    const trimmedPassword = inputPassword.current.toString().trim();
 
     const loginCredentials = {
       email: trimmedEmail,

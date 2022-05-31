@@ -12,7 +12,7 @@ const SearchBar = (props) => {
     // Reset selected keyword result
     if (value === "") setSearchTerm("");
 
-    searchTerm.current = value.trim();
+    searchTerm.current = value.toString().trim();
   };
 
   // Set search term after pressing the enter key

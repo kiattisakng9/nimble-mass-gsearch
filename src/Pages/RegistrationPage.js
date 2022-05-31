@@ -24,10 +24,10 @@ const RegistrationPage = () => {
     event.preventDefault();
 
     // Trim values
-    const trimmedFirstName = inputFirstName.current.trim();
-    const trimmedLastName = inputLastName.current.trim();
-    const trimmedEmail = inputEmail.current.trim();
-    const trimmedPassword = inputPassword.current.trim();
+    const trimmedFirstName = inputFirstName.current.toString().trim();
+    const trimmedLastName = inputLastName.current.toString().trim();
+    const trimmedEmail = inputEmail.current.toString().trim();
+    const trimmedPassword = inputPassword.current.toString().trim();
 
     const newUserInfo = {
       first_name: trimmedFirstName,
